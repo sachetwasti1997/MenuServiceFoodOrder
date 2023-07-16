@@ -3,4 +3,10 @@ spring:
     gcp:
       credentials:
         location: classpath:/fullstackapplications.json
+  data:
+    mongodb:
+      uri: ${MENU_MONGO_URL:mongodb://localhost:27071/menu}
+server:
+  port: 8081
 
+bucket_name: ${BUCKET_NAME:""}

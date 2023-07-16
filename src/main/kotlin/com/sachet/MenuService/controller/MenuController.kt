@@ -16,8 +16,8 @@ class MenuController(
 ) {
     @PostMapping("/create")
     fun createMapping(
-        @RequestPart("menu") menu: String,
-        @RequestPart("file") file: MultipartFile
+        @RequestParam(value = "menu") menu: String,
+        @RequestParam(value = "file") file: MultipartFile
     ): Menu {
         val objMpr = ObjectMapper()
         //
@@ -34,5 +34,21 @@ class MenuController(
     @GetMapping
     fun getAll(): MutableIterable<Menu> {
         return menuService.getMenuItems()
+    }
+
+    @DeleteMapping
+    fun deleteMenu(@RequestBody menu: Menu) {
+        menuService.deleteMenu(menu)
+    }
+
+    @PutMapping
+    fun updateMenu(@RequestParam("file") file: MultipartFile?, @RequestParam("menu") menu: String): Menu {
+        val objMpr: ObjectMapper
+        lateinit var menuJson: Menu
+        if (file != null) {
+            objMpr = ObjectMapper()
+            menuJson = objMpr.readValue<Menu>(menu)
+        }
+        return menuService.updateMenu(menuJson, file)
     }
 }
