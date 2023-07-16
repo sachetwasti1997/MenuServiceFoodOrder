@@ -1,0 +1,6 @@
+spring:
+  cloud:
+    gcp:
+      credentials:
+        location: classpath:/fullstackapplications.json
+
