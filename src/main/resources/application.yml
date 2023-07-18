@@ -6,6 +6,16 @@ spring:
   data:
     mongodb:
       uri: ${MENU_MONGO_URL:mongodb://localhost:27071/menu}
+  kafka:
+    topic: "menu-created-event"
+    producer:
+      bootstrap-servers: http://kafka-service:9092
+      key-serializer: org.apache.kafka.common.serialization.IntegerSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    admin:
+      properties:
+        bootstrap-servers: http://kafka-service:9092
+
 server:
   port: 8081
 

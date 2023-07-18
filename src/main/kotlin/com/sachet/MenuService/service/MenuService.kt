@@ -5,6 +5,7 @@ import com.google.cloud.storage.BlobInfo
 import com.google.cloud.storage.Storage
 import com.sachet.MenuService.exceptions.NotFoundException
 import com.sachet.MenuService.model.Menu
+import com.sachet.MenuService.producer.MenuCreatedEventPublisher
 import com.sachet.MenuService.repository.MenuRepository
 import jakarta.validation.Valid
 import org.springframework.beans.factory.annotation.Value
@@ -14,7 +15,8 @@ import org.springframework.web.multipart.MultipartFile
 @Service
 class MenuService(
     private val menuRepository: MenuRepository,
-    private val storage: Storage
+    private val storage: Storage,
+    private val menuCreatedEventPublisher: MenuCreatedEventPublisher
 ) {
     @Value("\${bucket_name}")
     lateinit var bucket_name: String
@@ -23,6 +25,7 @@ class MenuService(
 
         println(bucket_name)
         val menuSaved = menuRepository.save(menu)
+        menuCreatedEventPublisher.sendMenuCreatedEvent(menu)
         Thread {
             val fileName = "${System.nanoTime()}${multipartFile.originalFilename}"
             val blobId = BlobId.of(bucket_name, fileName)
