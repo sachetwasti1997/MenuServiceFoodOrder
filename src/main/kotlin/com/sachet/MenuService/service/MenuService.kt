@@ -25,7 +25,6 @@ class MenuService(
 
         println(bucket_name)
         val menuSaved = menuRepository.save(menu)
-        menuCreatedEventPublisher.sendMenuCreatedEvent(menu)
         Thread {
             val fileName = "${System.nanoTime()}${multipartFile.originalFilename}"
             val blobId = BlobId.of(bucket_name, fileName)
@@ -34,6 +33,7 @@ class MenuService(
             menu.image = str.name
             menuRepository.save(menu)
         }.start()
+        menuCreatedEventPublisher.sendMenuCreatedEvent(menu)
         return menuSaved
     }
 

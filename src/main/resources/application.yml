@@ -9,12 +9,13 @@ spring:
   kafka:
     topic: "menu-created-event"
     producer:
-      bootstrap-servers: http://kafka-service:9092
-      key-serializer: org.apache.kafka.common.serialization.IntegerSerializer
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      properties[request.timeout.ms]: 600000
     admin:
       properties:
-        bootstrap-servers: http://kafka-service:9092
+        bootstrap-servers: kafka-service:9092
+    bootstrap-servers: kafka-service:9092
 
 server:
   port: 8081
