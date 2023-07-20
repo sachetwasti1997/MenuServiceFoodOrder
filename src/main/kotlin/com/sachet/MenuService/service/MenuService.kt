@@ -16,14 +16,16 @@ import org.springframework.web.multipart.MultipartFile
 class MenuService(
     private val menuRepository: MenuRepository,
     private val storage: Storage,
+    private val jwtUtil: JwtUtil,
     private val menuCreatedEventPublisher: MenuCreatedEventPublisher
 ) {
     @Value("\${bucket_name}")
     lateinit var bucket_name: String
 
-    fun createMenu(@Valid menu: Menu, multipartFile: MultipartFile): Menu {
-
-        println(bucket_name)
+    fun createMenu(@Valid menu: Menu, multipartFile: MultipartFile, headers: Map<String, String>): Menu {
+        val bearer = "Bearer "
+        menu.userId = jwtUtil.extractUsername(headers["authorization"]!!.substring(bearer.length))
+        println(menu)
         val menuSaved = menuRepository.save(menu)
         Thread {
             val fileName = "${System.nanoTime()}${multipartFile.originalFilename}"

@@ -17,13 +17,14 @@ class MenuController(
     @PostMapping("/create")
     fun createMapping(
         @RequestParam(value = "menu") menu: String,
-        @RequestParam(value = "file") file: MultipartFile
+        @RequestParam(value = "file") file: MultipartFile,
+        @RequestHeader headers: Map<String, String>
     ): Menu {
         val objMpr = ObjectMapper()
         //
         //
         val menuJson = objMpr.readValue<Menu>(menu)
-        return menuService.createMenu(menuJson, file)
+        return menuService.createMenu(menuJson, file, headers)
     }
 
     @GetMapping("/{id}")

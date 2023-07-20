@@ -21,3 +21,4 @@ server:
   port: 8081
 
 bucket_name: ${BUCKET_NAME:""}
+secure_key: SECURE_KEY

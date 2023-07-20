@@ -14,5 +14,6 @@ data class Menu(
     var category: String ?= null,
     @field:NotBlank(message = "Price cannot be empty")
     var price: Double ?= null,
+    var userId: String ?= null,
     var image: String ?= null
 )
