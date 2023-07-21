@@ -14,5 +14,5 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 COPY --from=build /app/target/*.jar my-project.jar
 
-EXPOSE 8072
+EXPOSE 8081
 CMD ["java", "-jar", "my-project.jar"]

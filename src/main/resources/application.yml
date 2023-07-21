@@ -8,6 +8,12 @@ spring:
       uri: ${MENU_MONGO_URL:mongodb://localhost:27071/menu}
   kafka:
     topic: "menu-created-event"
+    ordertopic: "order-event"
+    consumer:
+      group-id: order-service-listeners
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      properties[request.timeout.ms]: 600000
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
