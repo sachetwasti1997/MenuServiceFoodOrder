@@ -9,11 +9,11 @@ spring:
   kafka:
     topic: "menu-created-event"
     ordertopic: "order-event"
-    consumer:
+    cancelorder: "cancelorder"
+    ordereventconsumer:
       group-id: order-service-listeners
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      properties[request.timeout.ms]: 600000
+    ordercancelconsumer:
+      group-id: order-cancel-listeners
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
