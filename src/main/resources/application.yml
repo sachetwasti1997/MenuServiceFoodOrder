@@ -10,10 +10,13 @@ spring:
     topic: "menu-created-event"
     ordertopic: "order-event"
     cancelorder: "cancelorder"
+    expireorder: "expireorder"
     ordereventconsumer:
       group-id: order-service-listeners
     ordercancelconsumer:
       group-id: order-cancel-listeners
+    orderexpireconsumer:
+      group-id: order-expiration-listeners
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
