@@ -26,9 +26,6 @@ public class KafkaConsumerConfig {
     @Value(value = "${spring.kafka.ordercancelconsumer.group-id}")
     private String cancelGroup;
 
-    @Value(value = "${spring.kafka.orderexpireconsumer.group-id}")
-    private String expireGroup;
-
     // 1. Consume string data from Kafka
 
     private ConsumerFactory<String, String> createConsumerFactory(String groupName) {
@@ -68,16 +65,6 @@ public class KafkaConsumerConfig {
         ConcurrentKafkaListenerContainerFactory<String, String> factory
                 = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(orderCancelConsumerFactory());
-        factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL);
-        return factory;
-    }
-
-    @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, String>
-            kafkaOrderExpiredListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, String> factory
-                = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(createConsumerFactory(expireGroup));
         factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL);
         return factory;
     }
